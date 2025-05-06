@@ -1,10 +1,10 @@
-package com.ToDoList.SpringBackend;
+package com.db.todoList;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBackendApplicationTests {
+class TodoListApplicationTests {
 
 	@Test
 	void contextLoads() {
