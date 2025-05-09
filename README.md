@@ -1,8 +1,8 @@
 # ToDoList---DB
 
-TO RUN:
+**TO RUN:**
 
-    Backend;
+#    Backend;
 
 -    cd project
 -    cd backend
@@ -12,7 +12,7 @@ TO RUN:
 
     mvn spring-boot:run
 
-    Frontend;
+#    Frontend;
 
 -    cd project
 -    cd frontend
