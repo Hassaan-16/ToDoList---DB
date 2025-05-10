@@ -12,6 +12,11 @@
 
     mvn spring-boot:run
 
+    or git bash;
+
+    ./mvnw spring-boot:run
+
+
 #    Frontend;
 
 -    cd project
