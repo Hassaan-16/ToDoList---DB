@@ -1,5 +1,6 @@
 package com.db.todoList.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,8 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import java.util.List;
+import jakarta.persistence.Table;
 
-@Entity
+@Entity(name = "users")
+@Table(name = "users")
 public class User {
     
     @Id
@@ -20,6 +23,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Project> projects;
 
     public User() {} // JPA requires default constructor

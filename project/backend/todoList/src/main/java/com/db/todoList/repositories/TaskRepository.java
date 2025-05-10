@@ -7,24 +7,27 @@ import com.db.todoList.entities.Task;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface TaskRepository extends JpaRepository<Task, Long> {
-    // Find tasks by project
-    List<Task> findByProjectId(Long projectId);
+public interface TaskRepository extends JpaRepository<Task, Long> {    // Find tasks by project
+    List<Task> findByProject_ProjectId(Long projectId);
     
     // Find tasks by status
-    List<Task> findByProjectIdAndStatus(Long projectId, String status);
+    List<Task> findByProject_ProjectIdAndStatus(Long projectId, String status);
     
     // Find tasks by priority
-    List<Task> findByProjectIdAndPriority(Long projectId, String priority);
+    List<Task> findByProject_ProjectIdAndPriority(Long projectId, String priority);
     
     // Find tasks due today
-    @Query("SELECT t FROM Task t WHERE t.projectId = :projectId AND t.dueDate = CURRENT_DATE")
+    @Query("SELECT t FROM tasks t JOIN t.project p WHERE p.projectId = :projectId AND t.dueDate = CURRENT_DATE")
     List<Task> findTasksDueToday(@Param("projectId") Long projectId);
     
     // Find overdue tasks
-    @Query("SELECT t FROM Task t WHERE t.projectId = :projectId AND t.dueDate < CURRENT_DATE AND t.status != 'COMPLETED'")
+    @Query("SELECT t FROM tasks t JOIN t.project p WHERE p.projectId = :projectId AND t.dueDate < CURRENT_DATE AND t.status != 'COMPLETED'")
     List<Task> findOverdueTasks(@Param("projectId") Long projectId);
+    // Find tasks by status    // Find tasks by priority
+    List<Task> findByProject_ProjectIdAndPriorityOrderByDueDateAsc(Long projectId, String priority);
+
+
     
     // Find tasks by due date range
-    List<Task> findByProjectIdAndDueDateBetweenOrderByDueDateAsc(Long projectId, LocalDate startDate, LocalDate endDate);
+    List<Task> findByProject_ProjectIdAndDueDateBetweenOrderByDueDateAsc(Long projectId, LocalDate startDate, LocalDate endDate);
 }

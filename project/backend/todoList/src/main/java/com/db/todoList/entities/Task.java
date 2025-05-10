@@ -1,14 +1,17 @@
 package com.db.todoList.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name = "tasks")
+@Table(name = "tasks")
 public class Task {
     
     @Id
@@ -23,6 +26,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @JsonBackReference
     private Project project;
 
     public Task() {}

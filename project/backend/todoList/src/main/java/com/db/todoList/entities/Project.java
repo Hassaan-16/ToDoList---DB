@@ -1,5 +1,7 @@
 package com.db.todoList.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,10 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
+import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import java.util.List;
 
-@Entity
+@Entity(name = "projects")
+@Table(name = "projects")
 public class Project {
     
     @Id
@@ -26,9 +30,11 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Task> tasks;
 
     public Project() {}

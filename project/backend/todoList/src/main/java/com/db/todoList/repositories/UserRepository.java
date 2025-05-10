@@ -9,13 +9,11 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // Authentication queries
     Optional<User> findByEmail(String email);
-    boolean existsByEmail(String email);
-
-    // Get user with their projects
-    @Query("SELECT u FROM User u LEFT JOIN FETCH u.projects WHERE u.id = :userId")
+    boolean existsByEmail(String email);    // Get user with their projects
+    @Query("SELECT u FROM users u LEFT JOIN FETCH u.projects WHERE u.userId = :userId")
     Optional<User> findUserWithProjects(@Param("userId") Long userId);
 
     // Get user with project count
-    @Query("SELECT u, COUNT(p) FROM User u LEFT JOIN u.projects p WHERE u.id = :userId GROUP BY u")
+    @Query("SELECT u, COUNT(p) FROM users u LEFT JOIN u.projects p WHERE u.userId = :userId GROUP BY u")
     Object[] getUserWithProjectCount(@Param("userId") Long userId);
 }

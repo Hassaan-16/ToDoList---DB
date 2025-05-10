@@ -37,15 +37,15 @@ public class TaskService {
     }
     
     public List<Task> getTasksByProjectId(Long projectId) {
-        return taskRepository.findByProjectId(projectId);
+        return taskRepository.findByProject_ProjectId(projectId);
     }
     
     public List<Task> getTasksByStatus(Long projectId, String status) {
-        return taskRepository.findByProjectIdAndStatus(projectId, status);
+        return taskRepository.findByProject_ProjectIdAndStatus(projectId, status);
     }
     
     public List<Task> getTasksByPriority(Long projectId, String priority) {
-        return taskRepository.findByProjectIdAndPriority(projectId, priority);
+        return taskRepository.findByProject_ProjectIdAndPriority(projectId, priority);
     }
     
     public List<Task> getTasksDueToday(Long projectId) {
