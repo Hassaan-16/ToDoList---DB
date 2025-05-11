@@ -1,9 +1,11 @@
 export interface User {
   id: string;
+  name: string;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
+  confirmPassword?: string; // Optional for compatibility
 }
 
 export interface Project {
@@ -11,6 +13,9 @@ export interface Project {
   name: string;
   userId: string;
   createdAt: string;
+  startDate: string;
+  endDate: string;
+  description: string;
 }
 
 export type TaskPriority = 'low' | 'medium' | 'high';
@@ -31,6 +36,6 @@ export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (userData: Omit<User, 'id'> & { password: string }) => Promise<void>;
+  register: (userData: Omit<User, 'id'> & { password: string; confirmPassword: string }) => Promise<void>;
   logout: () => void;
 }

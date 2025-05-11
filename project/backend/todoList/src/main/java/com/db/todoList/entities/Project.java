@@ -13,6 +13,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import java.util.List;
+import java.time.LocalDate;
 
 @Entity(name = "projects")
 @Table(name = "projects")
@@ -37,6 +38,10 @@ public class Project {
     @JsonManagedReference
     private List<Task> tasks;
 
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String description;
+
     public Project() {}
 
     public Project(String name, String status) {
@@ -48,6 +53,15 @@ public class Project {
         this.name = name;
         this.status = status;
         this.userId = userId;
+    }
+
+    public Project(String name, String status, Long userId, LocalDate startDate, LocalDate endDate, String description) {
+        this.name = name;
+        this.status = status;
+        this.userId = userId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
     }
 
     public Long getProjectId() {
@@ -96,5 +110,29 @@ public class Project {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

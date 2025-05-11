@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, AtSign, Lock, User, Phone } from 'lucide-react';
+import { UserPlus, AtSign, Lock, Phone } from 'lucide-react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { useAuth } from '../contexts/AuthContext';
@@ -30,31 +30,33 @@ const SignUp: React.FC = () => {
     
     // Validate form
     if (Object.values(formData).some(value => !value)) {
-      setError('Please fill in all fields');
-      return;
+        setError('Please fill in all fields');
+        return;
     }
     
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
+        setError('Passwords do not match');
+        return;
     }
     
     setError('');
     setIsLoading(true);
     
     try {
-      await register({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        password: formData.password
-      });
-      navigate('/dashboard');
-    } catch (error) {
-      setError('Registration failed. Email may already be in use.');
+        await register({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            password: formData.password,
+            confirmPassword: formData.confirmPassword
+        });
+        alert('Registration successful!'); // Show success message
+        navigate('/dashboard');
+    } catch (error: any) {
+        setError(error.message); // Show specific error message
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import ProjectList from '../components/ProjectList';
 import { useAuth } from '../contexts/AuthContext';
@@ -14,10 +14,10 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     // Redirect if not authenticated
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
+    // if (!isAuthenticated) {
+    //   navigate('/login');
+    //   return;
+    // }
 
     if (user) {
       // Load projects
@@ -53,6 +53,22 @@ const Dashboard: React.FC = () => {
       <Header />
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex space-x-8">
+              <Link
+                to="/dashboard"
+                className="text-lg font-bold text-gray-900 hover:text-blue-600"
+              >
+                Projects
+              </Link>
+              <Link
+                to="/calendar"
+                className="text-lg font-bold text-gray-900 hover:text-blue-600 ml-16"
+              >
+                Calendar
+              </Link>
+            </div>
+          </div>
           {user && (
             <ProjectList
               projects={projects}

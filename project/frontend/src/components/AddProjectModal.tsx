@@ -19,6 +19,9 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({
   onProjectAdded
 }) => {
   const [projectName, setProjectName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +41,10 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({
       id: generateId(),
       name: projectName.trim(),
       userId,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      startDate,
+      endDate,
+      description
     };
 
     // Save to local storage
@@ -49,6 +55,9 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({
     
     // Reset form and close modal
     setProjectName('');
+    setStartDate('');
+    setEndDate('');
+    setDescription('');
     setIsLoading(false);
     onClose();
   };
@@ -86,6 +95,30 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({
           onChange={(e) => setProjectName(e.target.value)}
           placeholder="Enter project name"
           autoFocus
+        />
+
+        <Input
+          id="startDate"
+          label="Start Date"
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+
+        <Input
+          id="endDate"
+          label="End Date"
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+
+        <Input
+          id="description"
+          label="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Enter project description"
         />
       </form>
     </Modal>

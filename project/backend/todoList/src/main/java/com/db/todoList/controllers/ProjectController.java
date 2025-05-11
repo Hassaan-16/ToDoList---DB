@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -50,8 +51,12 @@ public class ProjectController {
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(
             @PathVariable Long id,
-            @RequestBody Project project) {
-        return ResponseEntity.ok(projectService.updateProject(id, project));
+            @RequestParam String name,
+            @RequestParam String status,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
+            @RequestParam String description) {
+        return ResponseEntity.ok(projectService.updateProject(id, name, status, startDate, endDate, description));
     }
     
     @DeleteMapping("/{id}")

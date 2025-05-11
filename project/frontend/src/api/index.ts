@@ -70,3 +70,8 @@ export const taskApi = {
     deleteTask: (taskId: number) =>
         axios.delete(`${API_URL}/tasks/${taskId}`),
 };
+
+// Fetch tasks and projects deadlines
+export const getTasksDeadline = (userId: string) => {
+  return axios.get(`${API_URL}/users/${userId}/deadlines`);
+};

@@ -5,9 +5,11 @@ import {
   getUserByEmail, 
   removeAuth, 
   saveAuth, 
-  saveUser, 
-  generateId 
+  saveUser 
 } from '../utils/localStorage';
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -24,7 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = async (email: string, password: string): Promise<void> => {
+  const login = async (email: string): Promise<void> => {
     // In a real app, this would call an API
     // For this demo, we're using localStorage
     return new Promise((resolve, reject) => {
@@ -46,30 +48,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
-  const register = async (userData: Omit<User, 'id'> & { password: string }): Promise<void> => {
-    // In a real app, this would call an API
-    return new Promise((resolve, reject) => {
-      const existingUser = getUserByEmail(userData.email);
-      
-      setTimeout(() => {
-        if (existingUser) {
-          reject(new Error('Email already exists'));
-        } else {
-          // Create a new user
-          const { password, ...userDataWithoutPassword } = userData;
-          const newUser = { 
-            ...userDataWithoutPassword, 
-            id: generateId() 
+  const register = async (userData: Omit<User, 'id'> & { 
+    password: string, 
+    confirmPassword: string 
+  }): Promise<void> => {
+      // Frontend validation
+      if (userData.password !== userData.confirmPassword) {
+          throw new Error('Passwords do not match');
+      }
+  
+      try {
+          const payload = {
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+              email: userData.email,
+              password: userData.password,
+              confirmPassword: userData.confirmPassword,
+              phone: userData.phone
           };
+  
+          const response = await axios.post(`${API_URL}/users`, payload);
           
+          // Assuming backend returns the created user with ID
+          const newUser = { 
+              ...userData, 
+              id: response.data.userId 
+          };
+  
           saveUser(newUser);
           saveAuth(newUser.id);
           setUser(newUser);
           setIsAuthenticated(true);
-          resolve();
-        }
-      }, 500);
-    });
+  
+      } catch (error: any) {
+          const errorMessage = error.response?.data?.error || 
+                             error.response?.data?.message || 
+                             'Registration failed';
+          throw new Error(errorMessage);
+      }
   };
 
   const logout = (): void => {

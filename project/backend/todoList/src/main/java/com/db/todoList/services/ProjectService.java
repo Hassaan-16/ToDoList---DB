@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @Service
 public class ProjectService {
@@ -49,13 +50,16 @@ public class ProjectService {
     }
     
     // Update
-    public Project updateProject(Long id, Project projectDetails) {
-        Project project = projectRepository.findById(id)
+    public Project updateProject(Long projectId, String name, String status, LocalDate startDate, LocalDate endDate, String description) {
+        Project project = projectRepository.findById(projectId)
             .orElseThrow(() -> new RuntimeException("Project not found"));
-            
-        project.setName(projectDetails.getName());
-        project.setStatus(projectDetails.getStatus());
-        
+
+        project.setName(name);
+        project.setStatus(status);
+        project.setStartDate(startDate);
+        project.setEndDate(endDate);
+        project.setDescription(description);
+
         return projectRepository.save(project);
     }
     

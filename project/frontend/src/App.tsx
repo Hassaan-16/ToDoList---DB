@@ -1,15 +1,23 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
+import CalendarPage from './pages/CalendarPage';
+import Dashboard from './pages/Dashboard';
 
 const App: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
-  // Just redirect to the appropriate starting route
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+        </Routes>
+      </BrowserRouter>
+    );
   }
-  
+
   return <Navigate to="/login" replace />;
 }
 
