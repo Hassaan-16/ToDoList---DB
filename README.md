@@ -22,8 +22,10 @@
 -    cd project
 -    cd frontend
 
-    npm install react react-dom
+    npm install 
+    
+        npm install react react-dom
 
-    npm install --save-dev @types/react @types/react-dom
+        npm install --save-dev @types/react @types/react-dom
 
     npm run dev
